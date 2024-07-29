@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+   font-family: 'caustenblack';
+   src: url('./assets/fonts/causten-black-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-black-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustenbold';
+   src: url('./assets/fonts/causten-bold-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-bold-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustenextra_bold';
+   src: url('./assets/fonts/causten-extrabold-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-extrabold-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustenextra_light';
+   src: url('./assets/fonts/causten-extralight-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-extralight-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustenlight';
+   src: url('./assets/fonts/causten-light-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-light-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustenmedium';
+   src: url('./assets/fonts/causten-medium-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-medium-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustenregular';
+   src: url('./assets/fonts/causten-regular-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-regular-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustensemi_bold';
+   src: url('./assets/fonts/causten-semibold-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-semibold-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'caustenthin';
+   src: url('./assets/fonts/causten-thin-webfont.woff2') format('woff2'),
+      url('./assets/fonts/causten-thin-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'Mintaka Regular';
+   font-style: normal;
+   font-weight: normal;
+   src: local('Mintaka Regular'), url('./assets/fonts/Mintaka.woff') format('woff');
+}
+
+@font-face {
+   font-family: 'core_sans_thin';
+   src: url('./assets/fonts/coresansc-15thin-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-15thin-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_extralight';
+   src: url('./assets/fonts/coresansc-25extralight-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-25extralight-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_light';
+   src: url('./assets/fonts/coresansc-35light-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-35light-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_regular';
+   src: url('./assets/fonts/coresansc-45regular-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-45regular-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_medium';
+   src: url('./assets/fonts/coresansc-55medium-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-55medium-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_bold';
+   src: url('./assets/fonts/coresansc-65bold-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-65bold-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_extrabold';
+   src: url('./assets/fonts/coresansc-75extrabold-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-75extrabold-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_heavy';
+   src: url('./assets/fonts/coresansc-85heavy-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-85heavy-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'core_sans_black';
+   src: url('./assets/fonts/coresansc-95black-webfont.woff2') format('woff2'),
+      url('./assets/fonts/coresansc-95black-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+
+html {
+   @apply font-caustenregular;
+}
+
+.slick-track {
+   @apply flex gap-8 px-4
+}
+
+.slick-dots {
+   display: none !important;
+}
+
+@layer components {
+   .container {
+      @apply mx-auto px-6;
+   }
+
+   .nav-menu li a {
+      @apply hover:text-primary transition-all duration-300 ease-in-out;
+   }
+
+   .slide-in {
+      transform: translateX(0);
+      transition: transform 0.3s ease-out;
+   }
+
+   .slide-out {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-out;
+   }
+
+   .nav.default-nav {
+      @apply bg-transparent active:bg-transparent hover:bg-transparent focus:bg-transparent
+   }
+
+   .nav.default-nav:hover {
+      background: none;
+   }
+
+   .btn_sm_primary {
+      @apply text-[12px] font-caustenmedium px-8 py-2 border text-primary border-primary rounded-sm hover:bg-primary hover:text-white transition-colors duration-200 ease-in-out
+   }
+
+   .btn_sm_secondary {
+      @apply text-[12px] font-caustenmedium px-8 py-2 border text-white border-white rounded-sm hover:bg-white hover:text-primary transition-colors duration-200 ease-in-out
+   }
+
+   .sidebar-slide-right {
+      @apply transition-transform duration-300 ease-in-out translate-x-[120%] md:translate-x-0 md:opacity-100
+   }
+
+   .sidebar-slide-left {
+      @apply transition-transform duration-300 ease-in-out translate-x-0
+   }
+
+   .pagination-item {
+      @apply text-lg font-caustenbold p-2 rounded-md bg-primary text-white hover:bg-blueBar hover:text-white transition-colors duration-200 ease-in-out
+   }
+
+   .pagination-item.active {
+      @apply bg-blueBar text-white px-2 rounded-md transition-colors duration-200 ease-in-out
+   }
+
+   .breadcrumb li {
+      @apply relative
+   }
+
+   .breadcrumb li::after {
+      @apply absolute top-[1px] -right-[22px] content-["\003e"] text-lg font-caustenmedium text-secondary
+   }
+
+   .breadcrumb li:last-child::after {
+      @apply hidden
+   }
+
+   .tab {
+      @apply mb-3
+   }
+
+   .tab .tab-item.active::after, .tab .tab-item:hover::after {
+      @apply absolute -bottom-3 left-0 w-1/2 h-[3px] bg-secondary transition-all duration-300 ease-in-out content-[""]
+   }
+
+   .chart-item {
+      border-right: 1px solid #BEBCBD;
+      border-bottom: 1px solid #BEBCBD;
+   }
+
+   .chart-item:last-child {
+      border-right: 0px solid #BEBCBD;
+      border-bottom: 0px solid #BEBCBD;
+   }
+
+   .chart-item:nth-child(4),
+   .chart-item:nth-child(5),
+   .chart-item:nth-child(6) {
+      border-bottom: 0px solid #BEBCBD;
+   }
+
+   .chart-item:nth-child(3) {
+      border-right: 0px solid #BEBCBD;
+   }
+
+   .cart-table tbody tr {
+      @apply border-b border-border
+   }
+
+   .cart-table tbody tr:last-child {
+      @apply border-b-0
+   }
+
+
+}
