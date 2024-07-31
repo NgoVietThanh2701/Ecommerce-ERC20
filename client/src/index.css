@@ -4,72 +4,72 @@
 
 @font-face {
    font-family: 'caustenblack';
-   src: url('./assets/fonts/causten-black-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-black-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-black-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-black-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustenbold';
-   src: url('./assets/fonts/causten-bold-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-bold-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-bold-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-bold-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustenextra_bold';
-   src: url('./assets/fonts/causten-extrabold-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-extrabold-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-extrabold-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-extrabold-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustenextra_light';
-   src: url('./assets/fonts/causten-extralight-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-extralight-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-extralight-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-extralight-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustenlight';
-   src: url('./assets/fonts/causten-light-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-light-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-light-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-light-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustenmedium';
-   src: url('./assets/fonts/causten-medium-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-medium-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-medium-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-medium-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustenregular';
-   src: url('./assets/fonts/causten-regular-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-regular-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-regular-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-regular-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustensemi_bold';
-   src: url('./assets/fonts/causten-semibold-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-semibold-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-semibold-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-semibold-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'caustenthin';
-   src: url('./assets/fonts/causten-thin-webfont.woff2') format('woff2'),
-      url('./assets/fonts/causten-thin-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/causten-thin-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/causten-thin-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
@@ -78,77 +78,77 @@
    font-family: 'Mintaka Regular';
    font-style: normal;
    font-weight: normal;
-   src: local('Mintaka Regular'), url('./assets/fonts/Mintaka.woff') format('woff');
+   src: local('Mintaka Regular'), url('./assets/shop/fonts/Mintaka.woff') format('woff');
 }
 
 @font-face {
    font-family: 'core_sans_thin';
-   src: url('./assets/fonts/coresansc-15thin-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-15thin-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-15thin-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-15thin-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_extralight';
-   src: url('./assets/fonts/coresansc-25extralight-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-25extralight-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-25extralight-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-25extralight-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_light';
-   src: url('./assets/fonts/coresansc-35light-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-35light-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-35light-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-35light-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_regular';
-   src: url('./assets/fonts/coresansc-45regular-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-45regular-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-45regular-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-45regular-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_medium';
-   src: url('./assets/fonts/coresansc-55medium-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-55medium-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-55medium-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-55medium-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_bold';
-   src: url('./assets/fonts/coresansc-65bold-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-65bold-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-65bold-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-65bold-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_extrabold';
-   src: url('./assets/fonts/coresansc-75extrabold-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-75extrabold-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-75extrabold-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-75extrabold-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_heavy';
-   src: url('./assets/fonts/coresansc-85heavy-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-85heavy-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-85heavy-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-85heavy-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
 
 @font-face {
    font-family: 'core_sans_black';
-   src: url('./assets/fonts/coresansc-95black-webfont.woff2') format('woff2'),
-      url('./assets/fonts/coresansc-95black-webfont.woff') format('woff');
+   src: url('./assets/shop/fonts/coresansc-95black-webfont.woff2') format('woff2'),
+      url('./assets/shop/fonts/coresansc-95black-webfont.woff') format('woff');
    font-weight: normal;
    font-style: normal;
 }
@@ -263,6 +263,5 @@ html {
    .cart-table tbody tr:last-child {
       @apply border-b-0
    }
-
 
 }
