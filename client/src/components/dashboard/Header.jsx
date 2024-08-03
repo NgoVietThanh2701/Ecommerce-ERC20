@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { SidebarContext } from "../../context/dashboard/SideBarContext";
 import {
@@ -18,41 +18,11 @@ import {
    WindmillContext,
 } from "@windmill/react-ui";
 import response from "../../utils/demo/profileData";
+import { Link } from "react-router-dom";
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import { showShortAddress } from "../../utils/functionUtils";
 
-const Dropdown = ({ isOpen, onClose, children, align = "left" }) => {
-   const dropdownRef = useRef(null);
-
-   useEffect(() => {
-      const handleOutsideClick = (event) => {
-         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-            onClose();
-         }
-      };
-
-      if (isOpen) {
-         document.addEventListener("mousedown", handleOutsideClick);
-      } else {
-         document.removeEventListener("mousedown", handleOutsideClick);
-      }
-
-      return () => {
-         document.removeEventListener("mousedown", handleOutsideClick);
-      };
-   }, [isOpen, onClose]);
-
-   return (
-      isOpen && (
-         <div
-            ref={dropdownRef}
-            className={`absolute mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 ${align === "right" ? "right-0" : "left-0"}`}
-         >
-            {children}
-         </div>
-      )
-   );
-};
-
-function Header() {
+function Header({ connectWallet, address, balance }) {
    const { mode, toggleMode } = useContext(WindmillContext);
    const { toggleSidebar } = useContext(SidebarContext);
 
@@ -105,7 +75,7 @@ function Header() {
                </li>
                <li className="relative">
                   <button
-                     className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+                     className="group relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
                      onClick={handleNotificationsClick}
                      aria-label="Notifications"
                      aria-haspopup="true"
@@ -115,64 +85,47 @@ function Header() {
                         aria-hidden="true"
                         className="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
                      ></span>
+                     <ul className='w-60 bg-white hidden group-hover:block absolute top-10 right-0  rounded-b-md z-20 shadow-md py-2 transform transition duration-300'>
+                        <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700">
+                           <span>Messages</span>
+                           <Badge type="danger">13</Badge>
+                        </div>
+                        <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700">
+                           <span>Sales</span>
+                           <Badge type="danger">2</Badge>
+                        </div>
+                        <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700" onClick={() => alert("Alerts!")}>
+                           <span>Alerts</span>
+                        </div>
+                     </ul>
+                     <div className="z-10 h-7 w-12 absolute top-full right-0"></div>
                   </button>
-
-                  <Dropdown
-                     align="right"
-                     isOpen={isNotificationsMenuOpen}
-                     onClose={() => setIsNotificationsMenuOpen(false)}
-                  >
-                     <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700">
-                        <span>Messages</span>
-                        <Badge type="danger">13</Badge>
-                     </div>
-                     <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700">
-                        <span>Sales</span>
-                        <Badge type="danger">2</Badge>
-                     </div>
-                     <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700" onClick={() => alert("Alerts!")}>
-                        <span>Alerts</span>
-                     </div>
-                  </Dropdown>
                </li>
-               <li className="relative">
-                  <button
-                     className="rounded-full focus:shadow-outline-purple focus:outline-none"
+               <li>
+                  {address ? <button
+                     className="group relative rounded-full focus:shadow-outline-purple focus:outline-none flex items-center gap-2.5"
                      onClick={handleProfileClick}
                      aria-label="Account"
                      aria-haspopup="true"
                   >
-                     <Avatar
-                        className="align-middle"
-                        src={response.avatar}
-                        alt=""
-                        aria-hidden="true"
-                     />
-                  </button>
-                  <Dropdown
-                     align="right"
-                     isOpen={isProfileMenuOpen}
-                     onClose={() => setIsProfileMenuOpen(false)}
-                  >
-                     <div className="flex gap-0.5 items-center px-4 py-2 text-sm text-gray-700">
-                        <OutlinePersonIcon
-                           className="w-4 h-4 mr-3"
-                           aria-hidden="true"
-                        />
-                        <span>Profile</span>
-                     </div>
-                     <div className="flex gap-0.5 items-center px-4 py-2 text-sm text-gray-700">
-                        <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                        <span>Settings</span>
-                     </div>
-                     <div className="flex gap-0.5 items-center px-4 py-2 text-sm text-gray-700" onClick={() => alert("Log out!")}>
-                        <OutlineLogoutIcon
-                           className="w-4 h-4 mr-3"
-                           aria-hidden="true"
-                        />
-                        <span>Log out</span>
-                     </div>
-                  </Dropdown>
+                     <span className="font-medium text-[15px]">{showShortAddress(address, 5)} ({balance} LCK)</span>
+                     <Jazzicon diameter={32} seed={jsNumberForAddress(address)} />
+                     <ul className='w-60 bg-white hidden group-hover:block absolute top-10 right-0  rounded-b-md z-20 shadow-md py-2 transform transition duration-300'>
+                        <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700">
+                           <span>Messages</span>
+                           <Badge type="danger">13</Badge>
+                        </div>
+                        <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700">
+                           <span>Sales</span>
+                           <Badge type="danger">2</Badge>
+                        </div>
+                        <div className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700" onClick={() => alert("Alerts!")}>
+                           <span>Alerts</span>
+                        </div>
+                     </ul>
+                     <div className="z-10 h-7 w-40 absolute top-full right-0"></div>
+                  </button> :
+                     <button onClick={connectWallet} type="button" className="text-white text-sm bg-purple-600 hover:bg-purple-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2 me-2 dark:bg-purple-600 dark:hover:bg-purple-600 focus:outline-none dark:focus:bg-purple-600">Connect Metamask</button>}
                </li>
             </ul>
          </div>

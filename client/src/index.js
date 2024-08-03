@@ -5,7 +5,6 @@ import App from './App';
 import { SidebarProvider } from './context/dashboard/SideBarContext';
 import { Windmill } from "@windmill/react-ui";
 import windmillTheme from "./windmillTheme";
-import "./assets/dashboard/css/tailwind.output.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

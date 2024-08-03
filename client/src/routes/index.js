@@ -1,6 +1,11 @@
 import { lazy } from "react";
 
 // use lazy for better code splitting, a.k.a. load faster
+const Home = lazy(() => import("../pages/shop/Home"));
+const Products = lazy(() => import("../pages/shop/Products"));
+const CartPage = lazy(() => import("../pages/shop/CartPage"));
+const SingleProductShop = lazy(() => import("../pages/shop/SingleProduct"));
+
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
 const Orders = lazy(() => import("../pages/dashboard/Orders"));
 const ProductsAll = lazy(() => import("../pages/dashboard/ProductsAll"));
@@ -19,7 +24,27 @@ const Blank = lazy(() => import("../pages/dashboard/Blank"));
  * If you're looking for the links rendered in the SidebarContent, go to
  * `routes/sidebar.js`
  */
-const routes = [
+
+export const routeShop = [
+   {
+      path: "",
+      component: Home
+   },
+   {
+      path: "products",
+      component: Products
+   },
+   {
+      path: "products/:id",
+      component: SingleProductShop
+   },
+   {
+      path: "cart",
+      component: CartPage
+   }
+]
+
+export const routesDashboard = [
    {
       path: "",
       component: Dashboard,
@@ -65,5 +90,3 @@ const routes = [
       component: Blank,
    },
 ];
-
-export default routes;

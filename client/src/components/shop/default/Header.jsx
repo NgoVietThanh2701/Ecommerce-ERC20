@@ -5,29 +5,24 @@ import { CiSearch } from "react-icons/ci";
 import images from "../../../assets/shop/img";
 import MobileMenu from "../MobileMenu";
 import { Link } from "react-router-dom";
+import { showShortAddress } from '../../../utils/functionUtils.js';
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import Menu from "../../../routes/narbar";
+import ModalViewProduct from "../ModalRegister.jsx";
 
-const Menu = [
-   {
-      id: 1,
-      title: "Shop",
-      link: "/products",
-   },
-   {
-      id: 2,
-      title: "Men",
-      link: "#",
-   }
-];
+const Header = ({ connectWallet, address, balance }) => {
 
-const Header = () => {
    const [showMobileMenu, setShowMobileMenu] = useState(false);
+   const [isOpenModal, setIsOpenModal] = useState(false);
 
    const toggleMobileMenu = () => {
       setShowMobileMenu(!showMobileMenu);
    };
+
    return (
       <header>
          <div className="container">
+            {isOpenModal && <ModalViewProduct setIsOpenModal={setIsOpenModal} address={address} />}
             <div className="flex justify-between gap-12 items-center h-[108px]">
                <div className="logo">
                   <Link to="/">
@@ -54,10 +49,20 @@ const Header = () => {
                <button onClick={toggleMobileMenu}>
                   <BsGridFill className="flex text-secondary text-lg md:hidden hover:text-primary transition-colors duration-200" />
                </button>
-               <div className="hidden md:flex gap-4 text-secondary ">
-                  <button className="bg-grayBG p-3 rounded-md hover:bg-blueBar hover:text-white transition-all duration-200 delay-75">
-                     Connect Metamask
-                  </button>
+               <div className="hidden md:flex gap-2 text-secondary ">
+                  {(address) ?
+                     <div className="group relative flex items-center gap-2">
+                        <span className="font-medium">{showShortAddress(address, 5)} ({balance} LCK)</span>
+                        <Jazzicon diameter={33} seed={jsNumberForAddress(address)} />
+                        <ul className='w-44 bg-white hidden group-hover:block absolute top-12 left-16 rounded-t-md  rounded-b-md z-20 shadow-md py-3 transform transition duration-300'>
+                           <Link to='./dashboard' className="block py-2 px-3 hover:bg-slate-100">Trang quản trị</Link>
+                           <button onClick={() => setIsOpenModal(true)} className='w-full text-left py-2 px-3 hover:bg-slate-100'>Đăng ký</button>
+                        </ul>
+                        <div className="z-10 h-7 w-32 absolute top-full left-20"></div>
+                     </div> :
+                     <button onClick={connectWallet} className="bg-grayBG p-3 rounded-md hover:bg-blueBar hover:text-white transition-all duration-200 delay-75">
+                        Connect Metamask
+                     </button>}
                   <Link
                      to="/cart"
                      className="bg-grayBG  text-lg p-3 rounded-md hover:bg-blueBar hover:text-white transition-all duration-200 delay-75"

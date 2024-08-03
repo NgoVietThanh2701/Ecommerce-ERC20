@@ -12,6 +12,7 @@ contract Product {
     address public admin;
 
     mapping(uint256 => Structure.Product) products;
+    mapping(address => Structure.transactionInfo[]) transactionHistory;
     Structure.Seller[] rolesSeller;
     Structure.Shipper[] rolesShipper;
 
@@ -73,13 +74,13 @@ contract Product {
     function addSeller(
         address _address,
         string memory _name,
-        string memory _image
+        string memory _addressShop
     ) public onlyAdmin {
         require(_address != address(0));
         Structure.Seller memory sellerInfo = Structure.Seller({
             sellerAddress: _address,
             name: _name,
-            image: _image
+            addressShop: _addressShop
         });
         rolesSeller.push(sellerInfo);
     }
@@ -174,6 +175,15 @@ contract Product {
         products[_uid].shipper = infoShipper;
         products[_uid].consumer = msg.sender;
         products[_uid].productState = Structure.State.PurchasedByConsumer;
+        transactionHistory[msg.sender].push(
+            Structure.transactionInfo(
+                amountPrice,
+                "Purchase product",
+                block.timestamp,
+                _uid,
+                Structure.TypeTransaction.purchase
+            )
+        );
         emit PurchasedByConsumer(_uid);
     }
 
@@ -226,6 +236,42 @@ contract Product {
         );
         products[_uid].productState = Structure.State.ReceiveByConsumer;
         products[_uid].owner = products[_uid].consumer;
+        transactionHistory[products[_uid].seller.sellerAddress].push(
+            Structure.transactionInfo(
+                (products[_uid].productDetails.price * 9) / 10,
+                "Sell product",
+                block.timestamp,
+                _uid,
+                Structure.TypeTransaction.sell
+            )
+        );
+        transactionHistory[products[_uid].seller.sellerAddress].push(
+            Structure.transactionInfo(
+                (products[_uid].productDetails.price * 9) / 10,
+                "Shipping",
+                block.timestamp,
+                _uid,
+                Structure.TypeTransaction.ship
+            )
+        );
+        transactionHistory[products[_uid].seller.sellerAddress].push(
+            Structure.transactionInfo(
+                ((products[_uid].productDetails.price * 1) / 10) / 10,
+                "Fee VAT from seller",
+                block.timestamp,
+                _uid,
+                Structure.TypeTransaction.admin
+            )
+        );
+        transactionHistory[products[_uid].seller.sellerAddress].push(
+            Structure.transactionInfo(
+                ((products[_uid].shipper.feeShip * 1) / 10) / 10,
+                "Fee VAT from shipper",
+                block.timestamp,
+                _uid,
+                Structure.TypeTransaction.admin
+            )
+        );
         emit ReceiveByConsumer(_uid);
     }
 
@@ -365,5 +411,13 @@ contract Product {
             }
         }
         return listProduct;
+    }
+
+    function getTransactionsHistory()
+        public
+        view
+        returns (Structure.transactionInfo[] memory)
+    {
+        return transactionHistory[msg.sender];
     }
 }

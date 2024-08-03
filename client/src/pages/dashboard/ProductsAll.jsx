@@ -88,7 +88,7 @@ const ProductsAll = () => {
          <div className="flex text-gray-800 dark:text-gray-300">
             <div className="flex items-center text-purple-600">
                <Icon className="w-5 h-5" aria-hidden="true" icon={HomeIcon} />
-               <NavLink exact to="/app/dashboard" className="mx-2">
+               <NavLink exact="true" to="/app/dashboard" className="mx-2">
                   Dashboard
                </NavLink>
             </div>
@@ -303,7 +303,7 @@ const ProductsAll = () => {
 
                               <div className="flex items-center justify-between">
                                  <div>
-                                    <Link to={`/app/product/${product.id}`}>
+                                    <Link to={`../product/${product.id}`}>
                                        <Button
                                           icon={EyeIcon}
                                           className="mr-3"

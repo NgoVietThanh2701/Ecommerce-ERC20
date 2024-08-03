@@ -33,7 +33,7 @@ library Structure {
     struct Seller {
         address sellerAddress;
         string name;
-        string image;
+        string addressShop;
     }
 
     struct Shipper {
@@ -45,5 +45,20 @@ library Structure {
     enum Roles {
         Seller,
         Shipper
+    }
+
+    enum TypeTransaction {
+        purchase,
+        sell,
+        ship,
+        admin
+    }
+
+    struct transactionInfo {
+        uint256 tokenAmount;
+        string title;
+        uint256 date;
+        uint256 productID;
+        TypeTransaction typeTransaction;
     }
 }

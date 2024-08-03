@@ -44,8 +44,12 @@ describe("---Product", function () {
 
    /* positive testing */
    it("Create product", async () => {
-      await productContract.connect(admin).addSeller(seller.address, "Shop ban cho", "http://image/seller");
+      await productContract.connect(admin).addSeller(seller.address, "Shop ban cho", "dien duong, dien ban, quang nam");
       await productContract.connect(admin).addShipper(shipper.address, "DVVC nhanh", parseEther(15));
+      const listSeller = await productContract.GetSellers();
+      const listShipper = await productContract.GetShippers();
+      expect(listSeller.some((value: any) => { return value.sellerAddress === seller.address })).equal(true);
+      expect(listShipper.some((value: any) => { return value.shipperAddress === shipper.address })).equal(true);
       await token.transfer(consumer.address, parseEther(10 ** 3));
       const balanceSeller = formatEther(await token.balanceOf(seller.address));
       const balanceShipper = formatEther(await token.balanceOf(shipper.address));
@@ -89,6 +93,7 @@ describe("---Product", function () {
       expect(formatEther(await token.balanceOf(shipper.address))).equal(balanceShipper + formatEther(productByCode.shipper.feeShip) * 9 / 10);
       expect(formatEther(await token.balanceOf(productContract.address))).equal(0);
       expect(formatEther(await token.balanceOf(admin.address))).equal(balanceAdmin + formatEther(productByCode.shipper.feeShip) / 10 + formatEther(productByCode.productDetails.price) / 10);
+      console.log(await productContract.connect(seller).getTransactionsHistory());
    });
 
    // negative testing

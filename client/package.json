@@ -3,20 +3,25 @@
    "version": "0.1.0",
    "private": true,
    "dependencies": {
+      "@material-tailwind/react": "^2.1.9",
       "@testing-library/jest-dom": "^5.17.0",
       "@testing-library/react": "^13.4.0",
       "@testing-library/user-event": "^13.5.0",
       "@windmill/react-ui": "^0.3.1",
       "chart.js": "^2.9.3",
+      "dotenv": "^16.4.5",
+      "ethers": "^5.7.2",
       "framer-motion": "^10.15.0",
-      "react": "^18.3.1",
-      "react-dom": "^18.3.1",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
       "react-icons": "^5.2.1",
+      "react-jazzicon": "^1.0.4",
       "react-router-dom": "^6.14.2",
       "react-scripts": "5.0.1",
       "react-slick": "^0.29.0",
       "react-slideshow-image": "^4.2.1",
       "slick-carousel": "^1.8.1",
+      "sweetalert2": "^11.12.4",
       "toolcool-range-slider": "^4.0.28",
       "web-vitals": "^2.1.4"
    },
@@ -45,6 +50,9 @@
       ]
    },
    "devDependencies": {
+      "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+      "autoprefixer": "^10.4.19",
+      "postcss": "^8.4.40",
       "tailwindcss": "^3.4.6"
    }
 }

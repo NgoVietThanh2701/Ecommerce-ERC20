@@ -12,6 +12,14 @@ contract LCKCrowdSale is Ownable {
     uint256 public BNB_rate;
     IERC20 public token;
 
+    struct TransactionInfo {
+        uint256 amountBNB;
+        uint256 rate;
+        uint256 date;
+    }
+
+    mapping(address => TransactionInfo[]) transactionHistory;
+
     event BuyTokenByBNB(address buyer, uint256 amount);
     event SetBNBRate(uint256 newRate);
 
@@ -40,6 +48,9 @@ contract LCKCrowdSale is Ownable {
         );
         payable(_wallet).transfer(bnbAmount);
         SafeERC20.safeTransfer(token, msg.sender, amount);
+        transactionHistory[msg.sender].push(
+            TransactionInfo(bnbAmount, BNB_rate, block.timestamp)
+        );
         emit BuyTokenByBNB(msg.sender, amount);
     }
 
@@ -51,5 +62,13 @@ contract LCKCrowdSale is Ownable {
 
     function withdraw() public onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
+    }
+
+    function getTransactionsHistory()
+        public
+        view
+        returns (TransactionInfo[] memory)
+    {
+        return transactionHistory[msg.sender];
     }
 }

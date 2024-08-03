@@ -14,14 +14,13 @@ function parseEther(amount: number) {
 
 describe("---LCKCrowdSale", function () {
    let owner: SignerWithAddress,
-      alice: SignerWithAddress,
-      bob: SignerWithAddress;
+      alice: SignerWithAddress;
    let LCKCrowdSale: Contract;
    let token: Contract;
 
    beforeEach(async () => {
       await ethers.provider.send("hardhat_reset", []); /* reset network hardhat  */
-      [owner, alice, bob] = await ethers.getSigners();
+      [owner, alice] = await ethers.getSigners();
 
       const TOKEN = await ethers.getContractFactory("LuckToken", owner);
       token = await TOKEN.deploy();
@@ -35,6 +34,7 @@ describe("---LCKCrowdSale", function () {
       await LCKCrowdSale.connect(alice).buyTokenByBNB({ value: parseEther(5) });
       const balanceOwner = await ethers.provider.getBalance(owner.address);
       console.log(Number.parseFloat(ethers.utils.formatEther(balanceOwner)));
+      console.log(await LCKCrowdSale.connect(alice).getTransactionsHistory());
       expect(await token.balanceOf(alice.address)).equal(parseEther(5000));
       expect(await token.balanceOf(LCKCrowdSale.address)).equal(parseEther(45000));
    })

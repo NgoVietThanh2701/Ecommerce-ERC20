@@ -1,4 +1,3 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
 const windmill = require("@windmill/react-ui/config");
 
 /** @type {import('tailwindcss').Config} */
@@ -10,6 +9,9 @@ module.exports = {
    ],
    theme: {
       extend: {
+         backgroundColor: {
+            'half-transparent': 'rgba(0, 0, 0, 0.5)',
+         },
          colors: {
             primary: "#3C4242",
             secondary: "#807D7E",

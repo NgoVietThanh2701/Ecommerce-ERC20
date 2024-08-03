@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { DropdownIcon } from "../../../assets/dashboard/icons";
 import * as Icons from "../../../assets/dashboard/icons";
-import { Transition } from "@windmill/react-ui";
 
 function Icon({ icon, ...props }) {
    const Icon = Icons[icon];
@@ -29,17 +28,12 @@ function SidebarSubmenu({ route }) {
             </span>
             <DropdownIcon className="w-4 h-4" aria-hidden="true" />
          </button>
-         <Transition
-            show={isDropdownMenuOpen}
-            enter="transition-all ease-in-out duration-300"
-            enterFrom="opacity-25 max-h-0"
-            enterTo="opacity-100 max-h-xl"
-            leave="transition-all ease-in-out duration-300"
-            leaveFrom="opacity-100 max-h-xl"
-            leaveTo="opacity-0 max-h-0"
+         <div
+            className={`transition-all duration-300 ease-in-out overflow-hidden ${isDropdownMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+               }`}
          >
             <ul
-               className="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+               className="p-2 space-y-2 text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                aria-label="submenu"
             >
                {route.routes.map((r) => (
@@ -53,7 +47,7 @@ function SidebarSubmenu({ route }) {
                   </li>
                ))}
             </ul>
-         </Transition>
+         </div>
       </li>
    );
 }
