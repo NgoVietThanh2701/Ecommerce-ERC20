@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../../components/dashboard/Typography/PageTitle";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useOutlet, useOutletContext } from "react-router-dom";
 import {
    EditIcon,
    EyeIcon,
@@ -33,8 +33,54 @@ import {
 import response from "../../utils/demo/productData";
 import Icon from "../../components/dashboard/Icon";
 import { genRating } from "../../utils/genarateRating";
+import ProductContract from "../../contracts/Product.contract.ts";
 
 const ProductsAll = () => {
+
+   const { web3Provider, address } = useOutletContext();
+
+   const [products, setProducts] = useState([]);
+
+   const getProducts = async () => {
+      if (web3Provider && address) {
+         const productContract = new ProductContract();
+         const productList = await productContract.getProductsFromOwner(address);
+         console.log(productList)
+         const listProducts = [];
+         for (let i = 0; i < productList.length - 1; i++) {
+            listProducts.push(convertObjectProduct(productList[i]));
+         }
+         setProducts(listProducts.reverse());
+      }
+   }
+
+   const convertObjectProduct = (data) => {
+      return {
+         uid: data.uid,
+         consumer: data.consumer,
+         owner: data.owner,
+         productDetails: {
+            code: data.productDetails.code.toString(),
+            date: data.productDetails.date.toNumber(),
+            description: data.productDetails.description,
+            image: data.productDetails.image,
+            name: data.productDetails.name,
+            price: data.productDetails.price.toNumber(),
+            size: data.productDetails.size,
+         },
+         seller: {
+            addressShop: data.seller.addressShop,
+            name: data.seller.name,
+            sellerAddress: data.seller.sellerAddress
+         }
+      }
+   }
+
+   useEffect(() => {
+      getProducts();
+   }, [address])
+
+   /* */
    const [view, setView] = useState("grid");
 
    // Table and grid data handlling
@@ -50,8 +96,6 @@ const ProductsAll = () => {
       setPage(p);
    }
 
-   // on page change, load new sliced data
-   // here you would make another server request for new data
    useEffect(() => {
       setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
    }, [page, resultsPerPage]);
@@ -79,6 +123,8 @@ const ProductsAll = () => {
          setView("list");
       }
    };
+
+   console.log(products)
 
    return (
       <div>
@@ -196,42 +242,39 @@ const ProductsAll = () => {
                   <Table>
                      <TableHeader>
                         <tr>
+                           <TableCell>Code</TableCell>
                            <TableCell>Name</TableCell>
-                           <TableCell>Stock</TableCell>
-                           <TableCell>Rating</TableCell>
-                           <TableCell>QTY</TableCell>
                            <TableCell>Price</TableCell>
-                           <TableCell>Action</TableCell>
+                           <TableCell>Rating</TableCell>
+                           <TableCell>Description</TableCell>
+                           <TableCell>Size</TableCell>
                         </tr>
                      </TableHeader>
                      <TableBody>
-                        {data.map((product) => (
-                           <TableRow key={product.id}>
+                        {products.length > 0 && products.map((product) => (
+                           <TableRow key={product.uid}>
+                              <TableCell className="text-sm w-7">{product.productDetails.code}</TableCell>
                               <TableCell>
                                  <div className="flex items-center text-sm">
                                     <Avatar
                                        className="hidden mr-4 md:block"
-                                       src={product.photo}
+                                       src={product.productDetails.image}
                                        alt="Product image"
                                     />
                                     <div>
-                                       <p className="font-semibold">{product.name}</p>
+                                       <p className="font-semibold">{product.productDetails.name}</p>
                                     </div>
                                  </div>
                               </TableCell>
-                              <TableCell>
-                                 <Badge type={product.qty > 0 ? "success" : "danger"}>
-                                    {product.qty > 0 ? "In Stock" : "Out of Stock"}
-                                 </Badge>
-                              </TableCell>
+                              <TableCell className="text-sm">{product.productDetails.price}</TableCell>
                               <TableCell className="text-sm">
-                                 {genRating(product.rating, product.reviews.length, 5)}
+                                 {genRating(product.rating, 4, 5)}
                               </TableCell>
-                              <TableCell className="text-sm">{product.qty}</TableCell>
-                              <TableCell className="text-sm">{product.price}</TableCell>
+                              <TableCell className="text-sm" style={{ width: '100px' }}>{product.productDetails.description}</TableCell>
+                              <TableCell className="text-sm">{product.productDetails.size}</TableCell>
                               <TableCell>
                                  <div className="flex">
-                                    <Link to={`/app/product/${product.id}`}>
+                                    <Link to={`#`}>
                                        <Button
                                           icon={EyeIcon}
                                           className="mr-3"
@@ -247,7 +290,7 @@ const ProductsAll = () => {
                                     <Button
                                        icon={TrashIcon}
                                        layout="outline"
-                                       onClick={() => openModal(product.id)}
+                                       onClick={() => openModal(product.uid)}
                                        aria-label="Delete"
                                     />
                                  </div>
@@ -270,25 +313,25 @@ const ProductsAll = () => {
             <>
                {/* Car list */}
                <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-8">
-                  {data.map((product) => (
-                     <div className="" key={product.id}>
+                  {products.length && products.map((product) => (
+                     <div className="" key={product.uid}>
                         <Card>
                            <img
                               className="object-cover w-full"
-                              src={product.photo}
+                              src={product.productDetails.image}
                               alt="product"
                            />
                            <CardBody>
                               <div className="mb-3 flex items-center justify-between">
                                  <p className="font-semibold truncate  text-gray-600 dark:text-gray-300">
-                                    {product.name}
+                                    {product.productDetails.name}
                                  </p>
                                  <Badge
-                                    type={product.qty > 0 ? "success" : "danger"}
+                                    type={"danger"}
                                     className="whitespace-nowrap"
                                  >
                                     <p className="break-normal">
-                                       {product.qty > 0 ? `In Stock` : "Out of Stock"}
+                                       {product.seller.addressShop}
                                     </p>
                                  </Badge>
                               </div>
@@ -298,12 +341,12 @@ const ProductsAll = () => {
                               </p>
 
                               <p className="mb-8 text-gray-600 dark:text-gray-400">
-                                 {product.shortDescription}
+                                 Thông qua review, người dùng chia sẻ trải nghiệm cá nhân với sản phẩm đó  {product.productDetails.description}
                               </p>
 
                               <div className="flex items-center justify-between">
                                  <div>
-                                    <Link to={`../product/${product.id}`}>
+                                    <Link to={''}>
                                        <Button
                                           icon={EyeIcon}
                                           className="mr-3"

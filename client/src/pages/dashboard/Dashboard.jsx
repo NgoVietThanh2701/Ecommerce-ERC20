@@ -7,7 +7,6 @@ import PageTitle from "../../components/dashboard/Typography/PageTitle";
 import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from "../../assets/dashboard/icons";
 import RoundIcon from "../../components/dashboard/RoundIcon";
 import { doughnutOptions, lineOptions, doughnutLegends, lineLegends } from "../../utils/demo/chartsData";
-import OrdersTable from "../../components/dashboard/OrdersTable";
 
 const Dashboard = () => {
    return (
@@ -54,7 +53,6 @@ const Dashboard = () => {
          </div>
 
          <PageTitle>Orders</PageTitle>
-         <OrdersTable resultsPerPage={10} />
       </>
    );
 }

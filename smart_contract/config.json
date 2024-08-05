@@ -1,5 +1,9 @@
 {
-   "dev": {},
-   "bsctest": {},
-   "main": {}
+  "dev": {},
+  "bsctest": {
+    "LuckToken": "0xdB868486B732DEc5c42Dd3E1CCB77355465DC0Ac",
+    "Ico": "0x41041878EBC58d7BC6E259Ec492a74ad500D165c",
+    "Product": "0xca33F4B2f81E35057009DFece0E4B23e520a6877"
+  },
+  "main": {}
 }

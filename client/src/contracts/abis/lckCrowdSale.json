@@ -125,6 +125,36 @@
    },
    {
       "inputs": [],
+      "name": "getTransactionsHistory",
+      "outputs": [
+         {
+            "components": [
+               {
+                  "internalType": "uint256",
+                  "name": "amountBNB",
+                  "type": "uint256"
+               },
+               {
+                  "internalType": "uint256",
+                  "name": "rate",
+                  "type": "uint256"
+               },
+               {
+                  "internalType": "uint256",
+                  "name": "date",
+                  "type": "uint256"
+               }
+            ],
+            "internalType": "struct LCKCrowdSale.TransactionInfo[]",
+            "name": "",
+            "type": "tuple[]"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
       "name": "owner",
       "outputs": [
          {

@@ -3,16 +3,18 @@ import { lazy } from "react";
 // use lazy for better code splitting, a.k.a. load faster
 const Home = lazy(() => import("../pages/shop/Home"));
 const Products = lazy(() => import("../pages/shop/Products"));
-const CartPage = lazy(() => import("../pages/shop/CartPage"));
 const SingleProductShop = lazy(() => import("../pages/shop/SingleProduct"));
+const BuyToken = lazy(() => import("../pages/shop/BuyToken"));
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
-const Orders = lazy(() => import("../pages/dashboard/Orders"));
+const Request = lazy(() => import("../pages/dashboard/Request"));
 const ProductsAll = lazy(() => import("../pages/dashboard/ProductsAll"));
 const SingleProduct = lazy(() => import("../pages/dashboard/SingleProduct"));
 const AddProduct = lazy(() => import("../pages/dashboard/AddProduct"));
 const Page404 = lazy(() => import("../pages/dashboard/404"));
 const Blank = lazy(() => import("../pages/dashboard/Blank"));
+const User = lazy(() => import("../pages/dashboard/User"));
+const Order = lazy(() => import("../pages/dashboard/Order"));
 
 /**
  * ⚠ These are internal routes!
@@ -39,8 +41,8 @@ export const routeShop = [
       component: SingleProductShop
    },
    {
-      path: "cart",
-      component: CartPage
+      path: "buy-token",
+      component: BuyToken
    }
 ]
 
@@ -50,8 +52,8 @@ export const routesDashboard = [
       component: Dashboard,
    },
    {
-      path: "orders",
-      component: Orders,
+      path: "request",
+      component: Request
    },
    {
       path: "all-products",
@@ -66,15 +68,15 @@ export const routesDashboard = [
       component: SingleProduct,
    },
    {
-      path: "customers",
+      path: "ship",
       component: Blank,
+   },
+   {
+      path: "users",
+      component: User,
    },
    {
       path: "chats",
-      component: Blank,
-   },
-   {
-      path: "manage-profile",
       component: Blank,
    },
    {
@@ -86,7 +88,7 @@ export const routesDashboard = [
       component: Page404,
    },
    {
-      path: "blank",
-      component: Blank,
-   },
+      path: 'order',
+      component: Order
+   }
 ];

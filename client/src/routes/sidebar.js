@@ -5,16 +5,29 @@
  * If you're looking to actual Router routes, go to
  * `routes/index.js`
  */
-const routes = [
+export const routesAdmin = [
    {
       path: "/dashboard", // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
       name: "Dashboard", // name that appear in Sidebar
    },
    {
-      path: "/dashboard/orders",
-      icon: "CartIcon",
-      name: "Orders",
+      path: "/dashboard/request",
+      icon: "GroupIcon",
+      name: "Đăng ký",
+   },
+   {
+      path: "/dashboard/users",
+      icon: "ChatIcon",
+      name: "Người dùng",
+   }
+];
+
+export const routesSeller = [
+   {
+      path: "/dashboard",
+      icon: "HomeIcon",
+      name: "Dashboard",
    },
    {
       icon: "TruckIcon",
@@ -31,25 +44,18 @@ const routes = [
       ],
    },
    {
-      path: "/dashboard/customers",
-      icon: "GroupIcon",
-      name: "Customers",
+      path: "/dashboard/order",
+      icon: "HomeIcon",
+      name: "Đơn đặt hàng",
    },
-   {
-      path: "/dashboard/chats",
-      icon: "ChatIcon",
-      name: "Chats",
-   },
-   {
-      path: "/dashboard/manage-profile",
-      icon: "UserIcon",
-      name: "Profile",
-   },
-   {
-      path: "/dashboard/settings",
-      icon: "OutlineCogIcon",
-      name: "Settings",
-   }
-];
+]
 
-export default routes;
+export const routesShipper = [
+   {
+      path: "ship",
+      icon: "HomeIcon",
+      name: "Đơn hàng",
+   },
+]
+
+

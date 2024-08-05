@@ -4,7 +4,7 @@ import Header from "../../components/shop/default/Header.jsx";
 import { Outlet } from 'react-router-dom';
 import ThemedSuspense from '../../components/dashboard/ThemedSuspense'
 import { ethers } from 'ethers';
-import LCKContract from '../../contracts/LCKContract.ts'
+import LCKContract from '../../contracts/LCK.contract.ts'
 
 const DefaultLayout = () => {
 
@@ -112,8 +112,8 @@ const DefaultLayout = () => {
    return (
       <>
          <Suspense fallback={<ThemedSuspense />}>
-            <Header connectWallet={connectWallet} address={address} balance={balance} />
-            <Outlet />
+            <Header connectWallet={connectWallet} address={address} balance={balance} web3Provider={web3Provider} />
+            <Outlet context={{ web3Provider, address }} />
             <Footer />
          </Suspense>
       </>

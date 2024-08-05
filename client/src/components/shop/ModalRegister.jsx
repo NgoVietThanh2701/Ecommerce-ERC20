@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
-import DataTable from '../dashboard/DataTable';
 import InputForm from './widgets/InputForm';
-import { useOutletContext } from 'react-router-dom';
+import Empty from '../Empty';
 
-const ModalViewProduct = ({ setIsOpenModal, address }) => {
+const ModalViewProduct = ({ setIsOpenModal, address, isSeller, isShipper }) => {
 
    const [activeTab, setActiveTab] = useState("registry-seller");
    const [nameShop, SetNameShop] = useState("");
@@ -17,7 +16,7 @@ const ModalViewProduct = ({ setIsOpenModal, address }) => {
    const [isRegisteredShipper, SetIsRegisteredShipper] = useState(false);
 
    const handleRegistrySeller = () => {
-      const newSeller = { address, nameShop, addressShop };
+      const newSeller = { address, nameShop, addressShop, date: new Date() };
       const existSeller = JSON.parse(localStorage.getItem('registrySeller')) || [];
       existSeller.push(newSeller);
       localStorage.setItem("registrySeller", JSON.stringify(existSeller));
@@ -27,7 +26,7 @@ const ModalViewProduct = ({ setIsOpenModal, address }) => {
    }
 
    const handleRegistryShipper = () => {
-      const newShipper = { address, nameShipper, feeShip };
+      const newShipper = { address, nameShipper, feeShip, date: new Date() };
       const existShipper = JSON.parse(localStorage.getItem('registryShipper')) || [];
       existShipper.push(newShipper);
       localStorage.setItem("registryShipper", JSON.stringify(existShipper));
@@ -50,7 +49,7 @@ const ModalViewProduct = ({ setIsOpenModal, address }) => {
          value: "registry-seller",
          desc:
             <div className='flex flex-col gap-3 items-center justify-center mt-3'>
-               {isRegisteredSeller ?
+               {!isSeller ? (isRegisteredSeller ?
                   <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-3">
                      <p className="text-lg font-semibold">Xác nhận đăng ký</p>
                      <p>Hệ thống đã xác nhận bạn đăng ký làm người bán hàng thành công! Vui lòng đợi trong thời gian đươc duyệt.</p>
@@ -58,9 +57,8 @@ const ModalViewProduct = ({ setIsOpenModal, address }) => {
                   <><InputForm type="text" id="inputForNameSeller" name="Tên cửa hàng" value={nameShop} setValue={SetNameShop} />
                      <InputForm type="text" id="inputForAddressSeller" name="Địa chỉ" value={addressShop} setValue={SetAddressShop} />
                      <button onClick={handleRegistrySeller} type="button" className="text-white text-base bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Đăng ký</button>
-                  </>
+                  </>) : <Empty width='170px' />
                }
-
             </div>
       },
       {
@@ -68,7 +66,7 @@ const ModalViewProduct = ({ setIsOpenModal, address }) => {
          value: "registry-shipper",
          desc:
             <div className='flex flex-col gap-3 items-center justify-center mt-3'>
-               {isRegisteredShipper ?
+               {!isShipper ? (isRegisteredShipper ?
                   <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-3">
                      <p className="text-lg font-semibold">Xác nhận đăng ký</p>
                      <p>Hệ thống đã xác nhận bạn đăng ký làm người vận chuyển thành công! Vui lòng đợi trong thời gian đươc duyệt.</p>
@@ -77,7 +75,8 @@ const ModalViewProduct = ({ setIsOpenModal, address }) => {
                      <InputForm type="text" id="inputForNameShipper" name="Tên đơn vị vận chuyển" value={nameShipper} setValue={SetNameShipper} />
                      <InputForm type="number" id="inputForFeeShip" name="Chi phí vận chuyển(Km)" value={feeShip} setValue={SetFeeShip} />
                      <button onClick={handleRegistryShipper} type="button" className="text-white text-base bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Đăng ký</button>
-                  </>}
+                  </>) : <Empty />
+               }
 
             </div>
       }

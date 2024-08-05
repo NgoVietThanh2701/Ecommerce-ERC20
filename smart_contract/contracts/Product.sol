@@ -28,6 +28,9 @@ contract Product {
     event ShipByShipper(uint256 uid);
     event ReceiveByConsumer(uint256 uid);
 
+    event AddSeller(address _address);
+    event AddShipper(address _address);
+
     modifier onlyAdmin() {
         require(msg.sender == admin, "Sender is not a admin");
         _;
@@ -83,6 +86,7 @@ contract Product {
             addressShop: _addressShop
         });
         rolesSeller.push(sellerInfo);
+        emit AddSeller(_address);
     }
 
     function isSeller(address _address) public view returns (bool) {
@@ -107,6 +111,7 @@ contract Product {
             feeShip: _feeShip
         });
         rolesShipper.push(shipperInfo);
+        emit AddShipper(_address);
     }
 
     function isShipper(address _address) public view returns (bool) {
@@ -245,7 +250,7 @@ contract Product {
                 Structure.TypeTransaction.sell
             )
         );
-        transactionHistory[products[_uid].seller.sellerAddress].push(
+        transactionHistory[products[_uid].shipper.shipperAddress].push(
             Structure.transactionInfo(
                 (products[_uid].productDetails.price * 9) / 10,
                 "Shipping",
@@ -254,7 +259,7 @@ contract Product {
                 Structure.TypeTransaction.ship
             )
         );
-        transactionHistory[products[_uid].seller.sellerAddress].push(
+        transactionHistory[admin].push(
             Structure.transactionInfo(
                 ((products[_uid].productDetails.price * 1) / 10) / 10,
                 "Fee VAT from seller",
@@ -263,7 +268,7 @@ contract Product {
                 Structure.TypeTransaction.admin
             )
         );
-        transactionHistory[products[_uid].seller.sellerAddress].push(
+        transactionHistory[admin].push(
             Structure.transactionInfo(
                 ((products[_uid].shipper.feeShip * 1) / 10) / 10,
                 "Fee VAT from shipper",
@@ -276,12 +281,7 @@ contract Product {
     }
 
     // Get all Seller
-    function GetSellers()
-        public
-        view
-        onlyAdmin
-        returns (Structure.Seller[] memory)
-    {
+    function GetSellers() public view returns (Structure.Seller[] memory) {
         uint256 length = rolesSeller.length;
         Structure.Seller[] memory listSeller = new Structure.Seller[](length);
         for (uint256 i = 0; i < length; i++) {
@@ -305,12 +305,7 @@ contract Product {
     }
 
     // Get all Shippers
-    function GetShippers()
-        public
-        view
-        onlyAdmin
-        returns (Structure.Shipper[] memory)
-    {
+    function GetShippers() public view returns (Structure.Shipper[] memory) {
         uint256 length = rolesShipper.length;
         Structure.Shipper[] memory listShipper = new Structure.Shipper[](
             length

@@ -1,14 +1,16 @@
 import React, { useContext, Suspense, useEffect, useState, lazy } from 'react'
-import { useLocation, Outlet } from 'react-router-dom'
+import { useLocation, Outlet, useNavigate } from 'react-router-dom'
 import Sidebar from '../../components/dashboard/Sidebar';
 import Header from '../../components/dashboard/Header'
 import Main from './Main';
 import { ethers } from 'ethers';
 import ThemedSuspense from '../../components/dashboard/ThemedSuspense'
 import { SidebarContext } from '../../context/dashboard/SideBarContext';
-import LCKContract from '../../contracts/LCKContract.ts'
+import LCKContract from '../../contracts/LCK.contract.ts'
+import ProductContract from '../../contracts/Product.contract.ts';
 
 const Layout = () => {
+
    const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
    const [web3Provider, setWeb3Provider] = useState();
    const [address, setAddress] = useState('');
@@ -126,11 +128,11 @@ const Layout = () => {
    return (
       <div className={` flex h-screen bg-gray-50 dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}>
          <Suspense fallback={<ThemedSuspense />}>
-            <Sidebar />
+            <Sidebar address={address} web3Provider={web3Provider} />
             <div className="flex flex-col flex-1 w-full">
                <Header connectWallet={connectWallet} address={address} balance={balance} />
                <Main>
-                  <Outlet />
+                  <Outlet context={{ web3Provider, address }} />
                </Main>
             </div>
          </Suspense>

@@ -48,6 +48,8 @@ describe("---Product", function () {
       await productContract.connect(admin).addShipper(shipper.address, "DVVC nhanh", parseEther(15));
       const listSeller = await productContract.GetSellers();
       const listShipper = await productContract.GetShippers();
+      console.log("check seller is", await productContract.isSeller(seller.address));
+      console.log("check shipper is", await productContract.isShipper(shipper.address));
       expect(listSeller.some((value: any) => { return value.sellerAddress === seller.address })).equal(true);
       expect(listShipper.some((value: any) => { return value.shipperAddress === shipper.address })).equal(true);
       await token.transfer(consumer.address, parseEther(10 ** 3));
@@ -94,6 +96,8 @@ describe("---Product", function () {
       expect(formatEther(await token.balanceOf(productContract.address))).equal(0);
       expect(formatEther(await token.balanceOf(admin.address))).equal(balanceAdmin + formatEther(productByCode.shipper.feeShip) / 10 + formatEther(productByCode.productDetails.price) / 10);
       console.log(await productContract.connect(seller).getTransactionsHistory());
+      console.log(await productContract.connect(shipper).getTransactionsHistory());
+      console.log(await productContract.connect(admin).getTransactionsHistory());
    });
 
    // negative testing

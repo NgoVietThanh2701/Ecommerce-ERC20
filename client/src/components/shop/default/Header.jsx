@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsGridFill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
@@ -9,11 +9,36 @@ import { showShortAddress } from '../../../utils/functionUtils.js';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import Menu from "../../../routes/narbar";
 import ModalViewProduct from "../ModalRegister.jsx";
+import ProductContract from "../../../contracts/Product.contract.ts";
 
-const Header = ({ connectWallet, address, balance }) => {
+const Header = ({ connectWallet, address, balance, web3Provider }) => {
 
    const [showMobileMenu, setShowMobileMenu] = useState(false);
    const [isOpenModal, setIsOpenModal] = useState(false);
+
+   const [isSeller, setIsSeller] = useState(false);
+   const [isShipper, setIsShipper] = useState(false);
+
+   const checkSeller = async () => {
+      let result = false;
+      const productContract = new ProductContract(web3Provider);
+      result = await productContract.isSeller(address);
+      setIsSeller(result)
+   }
+
+   const checkShipper = async () => {
+      let result = false;
+      const productContract = new ProductContract(web3Provider);
+      result = await productContract.isShipper(address);
+      setIsShipper(result)
+   }
+
+   useEffect(() => {
+      if (web3Provider && address) {
+         checkSeller();
+         checkShipper();
+      }
+   }, [address]);
 
    const toggleMobileMenu = () => {
       setShowMobileMenu(!showMobileMenu);
@@ -22,7 +47,7 @@ const Header = ({ connectWallet, address, balance }) => {
    return (
       <header>
          <div className="container">
-            {isOpenModal && <ModalViewProduct setIsOpenModal={setIsOpenModal} address={address} />}
+            {isOpenModal && <ModalViewProduct setIsOpenModal={setIsOpenModal} address={address} isSeller={isSeller} isShipper={isShipper} />}
             <div className="flex justify-between gap-12 items-center h-[108px]">
                <div className="logo">
                   <Link to="/">
@@ -55,20 +80,15 @@ const Header = ({ connectWallet, address, balance }) => {
                         <span className="font-medium">{showShortAddress(address, 5)} ({balance} LCK)</span>
                         <Jazzicon diameter={33} seed={jsNumberForAddress(address)} />
                         <ul className='w-44 bg-white hidden group-hover:block absolute top-12 left-16 rounded-t-md  rounded-b-md z-20 shadow-md py-3 transform transition duration-300'>
-                           <Link to='./dashboard' className="block py-2 px-3 hover:bg-slate-100">Trang quản trị</Link>
+                           {(isSeller || isShipper || address === process.env.REACT_APP_ADMIN) &&
+                              <Link to='./dashboard' className="block py-2 px-3 hover:bg-slate-100">Trang quản trị</Link>}
                            <button onClick={() => setIsOpenModal(true)} className='w-full text-left py-2 px-3 hover:bg-slate-100'>Đăng ký</button>
                         </ul>
-                        <div className="z-10 h-7 w-32 absolute top-full left-20"></div>
+                        <div className="z-10 h-7 w-32 absolute top-full right-0"></div>
                      </div> :
                      <button onClick={connectWallet} className="bg-grayBG p-3 rounded-md hover:bg-blueBar hover:text-white transition-all duration-200 delay-75">
                         Connect Metamask
                      </button>}
-                  <Link
-                     to="/cart"
-                     className="bg-grayBG  text-lg p-3 rounded-md hover:bg-blueBar hover:text-white transition-all duration-200 delay-75"
-                  >
-                     <AiOutlineShoppingCart />
-                  </Link>
                </div>
                {/* Mobile Menu  */}
                <MobileMenu

@@ -55,8 +55,10 @@ import SingleThree from "./single-3.png";
 import CartOne from "./cart-1.png";
 import CartTwo from "./cart-2.png";
 import CartThree from "./cart-3.png";
+import noData from './notFound.png';
 
 const images = {
+   noData,
    logo,
    heroSlide1,
    flower,

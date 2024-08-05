@@ -6,8 +6,8 @@ const Menu = [
    },
    {
       id: 2,
-      title: "Men",
-      link: "#",
+      title: "Mua token",
+      link: "./buy-token",
    }
 ];
 

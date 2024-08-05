@@ -23,4 +23,17 @@ export default class CrowdSaleContract extends BaseInterface {
       });
       return this._handleTransactionResponse(tx);
    }
+
+   async getTransactionsHistory(): Promise<[]> {
+      const history = await this._contract.getTransactionsHistory();
+      const formatHistory: any = [];
+      for (let i = 0; i < history.length; i++) {
+         formatHistory.push({
+            amountBNB: this._toNumber(history[i].amountBNB),
+            rate: this._toNumber(history[i].rate),
+            date: history[i].date
+         });
+      }
+      return formatHistory;
+   }
 }

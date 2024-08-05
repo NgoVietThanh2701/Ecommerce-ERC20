@@ -6,36 +6,19 @@ import {
    MoonIcon,
    SunIcon,
    BellIcon,
-   MenuIcon,
-   OutlinePersonIcon,
-   OutlineCogIcon,
-   OutlineLogoutIcon,
+   MenuIcon
 } from "../../assets/dashboard/icons";
 import {
-   Avatar,
    Badge,
    Input,
    WindmillContext,
 } from "@windmill/react-ui";
-import response from "../../utils/demo/profileData";
-import { Link } from "react-router-dom";
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { showShortAddress } from "../../utils/functionUtils";
 
 function Header({ connectWallet, address, balance }) {
    const { mode, toggleMode } = useContext(WindmillContext);
    const { toggleSidebar } = useContext(SidebarContext);
-
-   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
-   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-
-   function handleNotificationsClick() {
-      setIsNotificationsMenuOpen(!isNotificationsMenuOpen);
-   }
-
-   function handleProfileClick() {
-      setIsProfileMenuOpen(!isProfileMenuOpen);
-   }
 
    return (
       <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
@@ -76,7 +59,6 @@ function Header({ connectWallet, address, balance }) {
                <li className="relative">
                   <button
                      className="group relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-                     onClick={handleNotificationsClick}
                      aria-label="Notifications"
                      aria-haspopup="true"
                   >
@@ -104,7 +86,6 @@ function Header({ connectWallet, address, balance }) {
                <li>
                   {address ? <button
                      className="group relative rounded-full focus:shadow-outline-purple focus:outline-none flex items-center gap-2.5"
-                     onClick={handleProfileClick}
                      aria-label="Account"
                      aria-haspopup="true"
                   >

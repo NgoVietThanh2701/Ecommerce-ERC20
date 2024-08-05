@@ -80,7 +80,7 @@ const Carousel = () => {
             >
                <Slider {...settings} className="mt-14">
                   {filteredCategories.map((item) => (
-                     <Link to={`/category/${item.id}`} key={item.id} className="pr-7">
+                     <Link to={`#`} key={item.id} className="pr-7">
                         <div className="w-full rounded-md overflow-hidden mb-8">
                            <img
                               src={item.image}
