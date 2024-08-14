@@ -14,7 +14,7 @@ const ListingGrid = ({ products }) => {
                   to={`./${product.productDetails.code}`}
                   className="text-black rounded-lg overflow-hidden w-full"
                >
-                  <img src={product.productDetails.image} alt="product" className="w-full" />
+                  <img src={product.productDetails.image} alt="product" className="w-full h-[330px]" />
                </Link>
                <div className="meta flex justify-between items-center">
                   <div>

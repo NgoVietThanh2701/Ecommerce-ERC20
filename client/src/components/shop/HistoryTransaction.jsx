@@ -60,9 +60,6 @@ const HistoryTransaction = ({ transactions }) => {
                      </tr>
                   ))
                }
-
-
-
             </tbody>
          </table>
       </div>

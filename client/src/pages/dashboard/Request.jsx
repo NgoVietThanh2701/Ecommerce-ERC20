@@ -23,12 +23,12 @@ const Request = () => {
 
    const getSellers = () => {
       const sellers = localStorage.getItem("registrySeller");
-      sellers ? setSellers(JSON.parse(sellers)) : setSellers([]);
+      setSellers(JSON.parse(sellers) || []);
    }
 
    const getShippres = () => {
       const shippers = localStorage.getItem("registryShipper");
-      shippers ? setShippers(JSON.parse(shippers)) : setShippers([]);
+      setShippers(JSON.parse(shippers) || []);
    }
 
    useEffect(() => {
@@ -44,7 +44,7 @@ const Request = () => {
             setIsLoading(true);
             const productContract = new ProductContract(web3Provider);
             await productContract.addSeller(address, name, addressShop);
-            listenEvent("AddSeller");
+            listenEvent("AddSeller", address);
          } catch (error) {
             toast.error("Thêm thất bại", { position: "top-center" });
          }
@@ -56,8 +56,8 @@ const Request = () => {
          try {
             setIsLoading(true);
             const productContract = new ProductContract(web3Provider);
-            await productContract.addShipper(address, name, feeShip);
-            listenEvent("AddShipper");
+            await productContract.addShipper(address, name, parseFloat(feeShip));
+            listenEvent("AddShipper", address);
          } catch (error) {
             toast.error("Thêm thất bại", { position: "top-center" });
             setIsLoading(false);
@@ -65,17 +65,21 @@ const Request = () => {
       }
    }
 
-   const listenEvent = (event) => {
+   const listenEvent = (event, address) => {
       let contract = new ethers.Contract(PRODUCT_ADDRESS, getAbiProduct(), web3Provider);
       contract.once(event, (uid) => {
-         toast.success("Success", { position: "top-center" });
          if (event === "AddSeller") {
-            localStorage.removeItem("registrySeller");;
-            getSellers();
+            const listSellers = JSON.parse(localStorage.getItem("registrySeller")) || [];
+            const updateSellers = listSellers.filter(seller => seller.address !== address);
+            localStorage.setItem("registrySeller", JSON.stringify(updateSellers));
+            setSellers(updateSellers);
          } else if (event === "AddShipper") {
-            localStorage.removeItem("registryShipper");
-            getShippres();
+            const listShippers = JSON.parse(localStorage.getItem("registryShipper")) || [];
+            const updateShippers = listShippers.filter(shipper => shipper.address !== address);
+            localStorage.setItem("registryShipper", JSON.stringify(updateShippers));
+            setShippers(updateShippers);
          }
+         toast.success("Success", { position: "top-center" });
          setIsLoading(false);
       })
    }

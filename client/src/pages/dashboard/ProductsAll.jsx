@@ -34,6 +34,7 @@ import response from "../../utils/demo/productData";
 import Icon from "../../components/dashboard/Icon";
 import { genRating } from "../../utils/genarateRating";
 import ProductContract from "../../contracts/Product.contract.ts";
+import { formatToEth } from "../../utils/functionUtils.js";
 
 const ProductsAll = () => {
 
@@ -43,14 +44,19 @@ const ProductsAll = () => {
 
    const getProducts = async () => {
       if (web3Provider && address) {
-         const productContract = new ProductContract();
-         const productList = await productContract.getProductsFromOwner(address);
-         console.log(productList)
-         const listProducts = [];
-         for (let i = 0; i < productList.length - 1; i++) {
-            listProducts.push(convertObjectProduct(productList[i]));
+         try {
+            const productContract = new ProductContract();
+            const productList = await productContract.getProductsFromOwner(address);
+            const listProducts = [];
+            for (let i = 0; i < productList.length; i++) {
+               if (productList[i].productState === 0) {
+                  listProducts.push(convertObjectProduct(productList[i]));
+               }
+            }
+            setProducts(listProducts.reverse());
+         } catch (error) {
+            setProducts([]);
          }
-         setProducts(listProducts.reverse());
       }
    }
 
@@ -65,7 +71,7 @@ const ProductsAll = () => {
             description: data.productDetails.description,
             image: data.productDetails.image,
             name: data.productDetails.name,
-            price: data.productDetails.price.toNumber(),
+            price: formatToEth(data.productDetails.price),
             size: data.productDetails.size,
          },
          seller: {
@@ -104,7 +110,7 @@ const ProductsAll = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedDeleteProduct, setSelectedDeleteProduct] = useState(null);
    async function openModal(productId) {
-      let product = await data.filter((product) => product.id === productId)[0];
+      let product = data.filter((product) => product.id === productId)[0];
       // console.log(product);
       setSelectedDeleteProduct(product);
       setIsModalOpen(true);
@@ -123,8 +129,6 @@ const ProductsAll = () => {
          setView("list");
       }
    };
-
-   console.log(products)
 
    return (
       <div>
@@ -317,7 +321,7 @@ const ProductsAll = () => {
                      <div className="" key={product.uid}>
                         <Card>
                            <img
-                              className="object-cover w-full"
+                              className="object-cover w-full max-h-[300px]"
                               src={product.productDetails.image}
                               alt="product"
                            />
@@ -340,8 +344,8 @@ const ProductsAll = () => {
                                  {product.price}
                               </p>
 
-                              <p className="mb-8 text-gray-600 dark:text-gray-400">
-                                 Thông qua review, người dùng chia sẻ trải nghiệm cá nhân với sản phẩm đó  {product.productDetails.description}
+                              <p className="mb-2 text-gray-600 dark:text-gray-400">
+                                 Thông qua review, người dùng chia sẻ trải nghiệm {product.productDetails.description}
                               </p>
 
                               <div className="flex items-center justify-between">

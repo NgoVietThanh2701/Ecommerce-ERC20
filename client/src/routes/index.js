@@ -12,9 +12,10 @@ const ProductsAll = lazy(() => import("../pages/dashboard/ProductsAll"));
 const SingleProduct = lazy(() => import("../pages/dashboard/SingleProduct"));
 const AddProduct = lazy(() => import("../pages/dashboard/AddProduct"));
 const Page404 = lazy(() => import("../pages/dashboard/404"));
-const Blank = lazy(() => import("../pages/dashboard/Blank"));
 const User = lazy(() => import("../pages/dashboard/User"));
 const Order = lazy(() => import("../pages/dashboard/Order"));
+const Shipper = lazy(() => import("../pages/dashboard/Shipper"));
+const Transaction = lazy(() => import("../pages/dashboard/TransactionHistory"));
 
 /**
  * ⚠ These are internal routes!
@@ -41,7 +42,7 @@ export const routeShop = [
       component: SingleProductShop
    },
    {
-      path: "buy-token",
+      path: "transaction",
       component: BuyToken
    }
 ]
@@ -69,19 +70,11 @@ export const routesDashboard = [
    },
    {
       path: "ship",
-      component: Blank,
+      component: Shipper,
    },
    {
       path: "users",
       component: User,
-   },
-   {
-      path: "chats",
-      component: Blank,
-   },
-   {
-      path: "settings",
-      component: Blank,
    },
    {
       path: "404",
@@ -90,5 +83,9 @@ export const routesDashboard = [
    {
       path: 'order',
       component: Order
+   },
+   {
+      path: 'transaction',
+      component: Transaction
    }
 ];

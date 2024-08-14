@@ -4,14 +4,10 @@ import Sidebar from '../../components/shop/default/Sidebar.jsx';
 import ListingGrid from '../../components/shop/ListingGrid.jsx';
 import { CiFilter } from "react-icons/ci";
 import Pagination from "../../components/shop/Pagination.jsx";
-import fakeData from "../../utils/fakeData.js";
 import ProductContract from '../../contracts/Product.contract.ts';
-import { useOutletContext } from 'react-router-dom';
-import { rpcProvider } from '../../contracts/config.ts';
+import { formatToEth } from '../../utils/functionUtils.js';
 
 const Products = () => {
-
-   const { address } = useOutletContext();
 
    const [sidebar, setSidebar] = useState(false);
    const toogleSidebar = () => {
@@ -21,19 +17,20 @@ const Products = () => {
    const [products, setProducts] = useState([]);
 
    const getProducts = async () => {
-      const productContract = new ProductContract();
-      const productList = await productContract.getProducts();
-      const listProducts = [];
-      console.log(productList)
-      for (let i = 0; i < productList.length - 1; i++) {
-         if (productList[i].shipper.shipperAddress === "0x0000000000000000000000000000000000000000") {
-            listProducts.push(convertObjectProduct(productList[i]));
+      try {
+         const productContract = new ProductContract();
+         const productList = await productContract.getProducts();
+         const listProducts = [];
+         for (let i = 0; i < productList.length; i++) {
+            if (productList[i].productState === 0) {
+               listProducts.push(convertObjectProduct(productList[i]));
+            }
          }
+         setProducts(listProducts.reverse());
+      } catch (error) {
+         setProducts([])
       }
-      setProducts(listProducts.reverse());
    }
-
-   console.log(products)
 
    const convertObjectProduct = (data) => {
       return {
@@ -46,7 +43,7 @@ const Products = () => {
             description: data.productDetails.description,
             image: data.productDetails.image,
             name: data.productDetails.name,
-            price: data.productDetails.price.toNumber(),
+            price: formatToEth(data.productDetails.price),
             size: data.productDetails.size,
          },
          seller: {

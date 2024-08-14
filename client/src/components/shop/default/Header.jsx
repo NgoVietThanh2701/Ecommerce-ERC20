@@ -55,7 +55,7 @@ const Header = ({ connectWallet, address, balance, web3Provider }) => {
                   </Link>
                </div>
                <nav className="hidden md:flex">
-                  <ul className="nav-menu flex gap-8 font-caustenmedium text-lg text-secondary">
+                  <ul className="nav-menu flex gap-8 font-caustenmedium text-[18px] text-secondary">
                      {Menu.map((item) => (
                         <li key={item.id}>
                            <Link to={item.link}>{item.title}</Link>
@@ -82,7 +82,10 @@ const Header = ({ connectWallet, address, balance, web3Provider }) => {
                         <ul className='w-44 bg-white hidden group-hover:block absolute top-12 left-16 rounded-t-md  rounded-b-md z-20 shadow-md py-3 transform transition duration-300'>
                            {(isSeller || isShipper || address === process.env.REACT_APP_ADMIN) &&
                               <Link to='./dashboard' className="block py-2 px-3 hover:bg-slate-100">Trang quản trị</Link>}
-                           <button onClick={() => setIsOpenModal(true)} className='w-full text-left py-2 px-3 hover:bg-slate-100'>Đăng ký</button>
+                           {
+                              process.env.REACT_APP_ADMIN !== address &&
+                              <button onClick={() => setIsOpenModal(true)} className='w-full text-left py-2 px-3 hover:bg-slate-100'>Đăng ký</button>
+                           }
                         </ul>
                         <div className="z-10 h-7 w-32 absolute top-full right-0"></div>
                      </div> :

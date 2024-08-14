@@ -5,12 +5,14 @@ import { Outlet } from 'react-router-dom';
 import ThemedSuspense from '../../components/dashboard/ThemedSuspense'
 import { ethers } from 'ethers';
 import LCKContract from '../../contracts/LCK.contract.ts'
+import CrowdSaleContract from '../../contracts/CrowdSale.contract.ts';
 
 const DefaultLayout = () => {
 
    const [web3Provider, setWeb3Provider] = useState();
    const [address, setAddress] = useState('');
    const [balance, setBalance] = useState(0);
+   const [transactions, SetTransactions] = useState([]);
 
    const getBalance = async () => {
       if (web3Provider && address) {
@@ -20,9 +22,18 @@ const DefaultLayout = () => {
       }
    }
 
+   const getTransaction = async () => {
+      if (web3Provider) {
+         const crowdContract = new CrowdSaleContract(web3Provider);
+         const histories = await crowdContract.getTransactionsHistory();
+         SetTransactions(histories);
+      }
+   }
+
    useEffect(() => {
       if (address) {
          getBalance(); // Gọi getBalance khi component mount và có địa chỉ ví
+         getTransaction();
       }
    }, [address]);
 
@@ -71,6 +82,7 @@ const DefaultLayout = () => {
             setWeb3Provider(null);
             setAddress("");
             setBalance(0);
+            SetTransactions([])
             localStorage.removeItem("isMetamaskConnected");
          }
       };
@@ -79,6 +91,7 @@ const DefaultLayout = () => {
          setWeb3Provider(null);
          setAddress("");
          setBalance(0);
+         SetTransactions([])
          localStorage.removeItem("isMetamaskConnected");
       };
 
@@ -98,6 +111,7 @@ const DefaultLayout = () => {
    useEffect(() => {
       const handleBlock = () => {
          getBalance(); // Gọi getBalance để cập nhật số dư khi có block mới
+         getTransaction();
       };
       if (web3Provider) {
          const provider = new ethers.providers.Web3Provider(window.ethereum, undefined);
@@ -113,7 +127,7 @@ const DefaultLayout = () => {
       <>
          <Suspense fallback={<ThemedSuspense />}>
             <Header connectWallet={connectWallet} address={address} balance={balance} web3Provider={web3Provider} />
-            <Outlet context={{ web3Provider, address }} />
+            <Outlet context={{ web3Provider, address, transactions }} />
             <Footer />
          </Suspense>
       </>

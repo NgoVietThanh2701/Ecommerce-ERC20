@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Product {
     IERC20 private token;
-    uint uid;
+    uint public uid;
     address public admin;
 
     mapping(uint256 => Structure.Product) products;
@@ -180,15 +180,6 @@ contract Product {
         products[_uid].shipper = infoShipper;
         products[_uid].consumer = msg.sender;
         products[_uid].productState = Structure.State.PurchasedByConsumer;
-        transactionHistory[msg.sender].push(
-            Structure.transactionInfo(
-                amountPrice,
-                "Purchase product",
-                block.timestamp,
-                _uid,
-                Structure.TypeTransaction.purchase
-            )
-        );
         emit PurchasedByConsumer(_uid);
     }
 
@@ -252,7 +243,7 @@ contract Product {
         );
         transactionHistory[products[_uid].shipper.shipperAddress].push(
             Structure.transactionInfo(
-                (products[_uid].productDetails.price * 9) / 10,
+                (products[_uid].shipper.feeShip * 9) / 10,
                 "Shipping",
                 block.timestamp,
                 _uid,
@@ -261,7 +252,7 @@ contract Product {
         );
         transactionHistory[admin].push(
             Structure.transactionInfo(
-                ((products[_uid].productDetails.price * 1) / 10) / 10,
+                (products[_uid].productDetails.price * 1) / 10,
                 "Fee VAT from seller",
                 block.timestamp,
                 _uid,
@@ -270,7 +261,7 @@ contract Product {
         );
         transactionHistory[admin].push(
             Structure.transactionInfo(
-                ((products[_uid].shipper.feeShip * 1) / 10) / 10,
+                (products[_uid].shipper.feeShip * 1) / 10,
                 "Fee VAT from shipper",
                 block.timestamp,
                 _uid,
@@ -332,10 +323,8 @@ contract Product {
 
     /// @dev Get all product
     function getProducts() public view returns (Structure.Product[] memory) {
-        Structure.Product[] memory listProduct = new Structure.Product[](
-            uid + 1
-        );
-        for (uint256 i = 0; i <= uid; i++) {
+        Structure.Product[] memory listProduct = new Structure.Product[](uid);
+        for (uint256 i = 0; i < uid; i++) {
             listProduct[i] = products[i];
         }
         return listProduct;
@@ -343,7 +332,7 @@ contract Product {
 
     /* check code of product is exist or not */
     function checkProductCode(string memory _code) public view returns (bool) {
-        for (uint256 i = 0; i <= uid; i++) {
+        for (uint256 i = 0; i < uid; i++) {
             if (
                 keccak256(bytes(products[i].productDetails.code)) ==
                 keccak256(bytes(_code))
@@ -360,7 +349,7 @@ contract Product {
     ) public view returns (Structure.Product memory) {
         require(checkProductCode(_code), "Code product is not exists");
         uint256 idProduct;
-        for (uint256 i = 1; i < uid; i++) {
+        for (uint256 i = 0; i < uid; i++) {
             if (
                 keccak256(bytes(products[i].productDetails.code)) ==
                 keccak256(bytes(_code))
@@ -372,7 +361,7 @@ contract Product {
     }
 
     function checkOwnerProduct(address _address) public view returns (bool) {
-        for (uint256 i = 0; i <= uid; i++) {
+        for (uint256 i = 0; i < uid; i++) {
             if (products[i].owner == _address) {
                 return true;
             }
@@ -383,7 +372,7 @@ contract Product {
     // @dev get count of Products
     function getCountProducts(address _address) public view returns (uint256) {
         uint256 count = 0;
-        for (uint i = 0; i <= uid; i++) {
+        for (uint i = 0; i < uid; i++) {
             if (products[i].owner == _address) {
                 count++;
             }
@@ -399,7 +388,7 @@ contract Product {
         uint256 count = getCountProducts(_address);
         Structure.Product[] memory listProduct = new Structure.Product[](count);
         uint256 j = 0;
-        for (uint256 i = 0; i <= uid; i++) {
+        for (uint256 i = 0; i < uid; i++) {
             if (products[i].owner == _address) {
                 listProduct[j] = products[i];
                 j++;

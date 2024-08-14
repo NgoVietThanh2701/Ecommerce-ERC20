@@ -98,6 +98,10 @@ describe("---Product", function () {
       console.log(await productContract.connect(seller).getTransactionsHistory());
       console.log(await productContract.connect(shipper).getTransactionsHistory());
       console.log(await productContract.connect(admin).getTransactionsHistory());
+      const products = await productContract.getProducts();
+      console.log("-------", products.length);
+      console.log(products);
+      console.log("ID: ", await productContract.uid());
    });
 
    // negative testing
@@ -109,5 +113,11 @@ describe("---Product", function () {
    });
    it("Should not grant role, sender is not shipper!", async () => {
       await expect(productContract.getProductByCode("#dau123")).revertedWith("Code product is not exists");
+   });
+   it("Get products when don't add product", async () => {
+      const products = await productContract.getProducts();
+      console.log(products);
+      await expect(productContract.getProductsFromOwner(seller.address)).revertedWith("Sender is not owner");
+      expect(products).to.deep.equal([]);
    });
 })

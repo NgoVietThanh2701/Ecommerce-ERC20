@@ -14,13 +14,13 @@ export default class ProductContract extends BaseInterface {
       await this._contract.addSeller(address, name, addressShop, this._option);
    }
 
-   async addShipper(address: string, name: string, feeShip: string) {
-      await this._contract.addShipper(address, name, feeShip, this._option);
+   async addShipper(address: string, name: string, feeShip: number) {
+      await this._contract.addShipper(address, name, this._parseToEth(feeShip), this._option);
    }
 
    // step 1
    async soldProduct(name: string, code: string, price: number, image: string, description: string, size: string) {
-      await this._contract.soldProduct(name, code, price, image, description, size, this._option);
+      await this._contract.soldProduct(name, code, this._parseToEth(price), image, description, size, this._option);
    }
 
    // step 2
@@ -83,5 +83,10 @@ export default class ProductContract extends BaseInterface {
    async isShipper(address: string): Promise<boolean> {
       const check = await this._contract.isShipper(address);
       return check;
+   }
+
+   async getTransactionsHistory() {
+      const transactions = await this._contract.getTransactionsHistory();
+      return transactions;
    }
 }

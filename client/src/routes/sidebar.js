@@ -13,14 +13,19 @@ export const routesAdmin = [
    },
    {
       path: "/dashboard/request",
-      icon: "GroupIcon",
+      icon: "EyeIcon",
       name: "Đăng ký",
    },
    {
       path: "/dashboard/users",
-      icon: "ChatIcon",
+      icon: "UserIcon",
       name: "Người dùng",
-   }
+   },
+   {
+      path: "/dashboard/transaction",
+      icon: "CardsIcon",
+      name: "Lịch sử giao dịch",
+   },
 ];
 
 export const routesSeller = [
@@ -45,16 +50,26 @@ export const routesSeller = [
    },
    {
       path: "/dashboard/order",
-      icon: "HomeIcon",
+      icon: "CardsIcon",
       name: "Đơn đặt hàng",
+   },
+   {
+      path: "/dashboard/transaction",
+      icon: "EyeIcon",
+      name: "Lịch sử",
    },
 ]
 
 export const routesShipper = [
    {
       path: "ship",
-      icon: "HomeIcon",
+      icon: "StoreIcon",
       name: "Đơn hàng",
+   },
+   {
+      path: "/dashboard/transaction",
+      icon: "EyeIcon",
+      name: "Lịch sử",
    },
 ]
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdSwapVert } from "react-icons/md";
-const SwapToken = ({ amount, handleAmountChange, handleBuyToken, equivalent, rate }) => {
+const SwapToken = ({ amount, handleAmountChange, handleBuyToken, equivalent, rate, web3Provider }) => {
    return (
       <form className="max-w-md mx-auto">
          <div className="mb-4">
@@ -25,8 +25,9 @@ const SwapToken = ({ amount, handleAmountChange, handleBuyToken, equivalent, rat
             />
          </div>
          <button
-            type="button" onClick={handleBuyToken}
-            className="bg-blue-600 hover:bg-blue-700 mt-4 text-white font-bold py-2 px-4 rounded w-full flex items-center justify-center"
+            type="button" onClick={handleBuyToken} disabled={web3Provider ? false : true}
+            className={`bg-blue-600 hover:bg-blue-700 mt-4 text-white font-bold py-2 px-4 rounded w-full flex items-center justify-center 
+               ${!web3Provider && "cursor-not-allowed"} cursor-pointer`}
          >
             Swap
          </button>

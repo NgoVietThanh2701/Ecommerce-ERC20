@@ -16,6 +16,7 @@ import { getAbiProduct, PRODUCT_ADDRESS } from "../../contracts/config.ts";
 import { ethers } from "ethers";
 import Loading from "../../components/dashboard/Loading.jsx";
 import LCKContract from "../../contracts/LCK.contract.ts";
+import { formatToEth } from "../../utils/functionUtils.js";
 
 const breadcrumbLinks = [
    {
@@ -45,31 +46,38 @@ const SingleProduct = () => {
    const [shippers, setShippers] = useState([]);
    const [featuredImage, setFeaturedImage] = useState(null);
 
-
    const [shipper, setShipper] = useState("");
 
    const getProductByCode = async () => {
       if (id) {
-         const productContract = new ProductContract();
-         const product = await productContract.getProductByCode(id);
-         setProduct(convertObjectProduct(product));
-         setIsLoading(false);
+         try {
+            const productContract = new ProductContract();
+            const product = await productContract.getProductByCode(id);
+            setProduct(convertObjectProduct(product));
+            setIsLoading(false);
+         } catch (error) {
+            console.log(error)
+         }
       }
    }
 
    const getListShipper = async () => {
-      const productContract = new ProductContract();
-      const shipperList = await productContract.getShippers();
-      const listShippers = [];
-      for (let i = 0; i < shipperList.length; i++) {
-         listShippers.push(convertObjShipper(shipperList[i]));
+      try {
+         const productContract = new ProductContract();
+         const shipperList = await productContract.getShippers();
+         const listShippers = [];
+         for (let i = 0; i < shipperList.length; i++) {
+            listShippers.push(convertObjShipper(shipperList[i]));
+         }
+         setShippers(listShippers);
+      } catch (error) {
+         console.log(error)
       }
-      setShippers(listShippers);
    }
 
    const convertObjShipper = (data) => {
       return {
-         feeShip: data.feeShip.toNumber(),
+         feeShip: formatToEth(data.feeShip),
          name: data.name,
          shipperAddress: data.shipperAddress
       }
@@ -86,7 +94,7 @@ const SingleProduct = () => {
             description: data.productDetails.description,
             image: data.productDetails.image,
             name: data.productDetails.name,
-            price: data.productDetails.price.toNumber(),
+            price: formatToEth(data.productDetails.price),
             size: data.productDetails.size,
          },
          seller: {
@@ -94,9 +102,6 @@ const SingleProduct = () => {
             name: data.seller.name,
             sellerAddress: data.seller.sellerAddress
          },
-         // shipper: {
-         //    address
-         // }
       }
    }
 
@@ -114,7 +119,7 @@ const SingleProduct = () => {
             setIsLoading(true);
             const productContract = new ProductContract(web3Provider);
             const shipperInfo = await productContract.getShipperByAddress(shipper);
-            const amountTotal = shipperInfo.feeShip.toNumber() + product.productDetails.price;
+            const amountTotal = formatToEth(shipperInfo.feeShip) + product.productDetails.price;
             const lckContract = new LCKContract(web3Provider);
             await lckContract.approve(productContract._contractAddress, amountTotal);
             await productContract.purchasedProduct(product.uid, shipper);
@@ -123,12 +128,8 @@ const SingleProduct = () => {
             console.log(error)
             setIsLoading(false)
          }
-      } else {
-         console.log('ereror')
       }
    }
-
-   console.log(product)
 
    const navigate = useNavigate();
 
@@ -137,8 +138,7 @@ const SingleProduct = () => {
       contract.once("PurchasedByConsumer", (uid) => {
          setIsLoading(false);
          toast.success("Success", { position: "top-center" });
-         console.log('buy success')
-         navigate('./')
+         navigate('/')
       })
    }
 

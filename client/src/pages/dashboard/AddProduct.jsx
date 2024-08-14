@@ -63,7 +63,6 @@ const AddProduct = () => {
             const productContract = new ProductContract(web3Provider);
             listenEvent();
             await productContract.soldProduct(payload.name, uuidv4(), Number.parseFloat(payload.price), urlImage, payload.description, payload.size);
-            setPayload({ name: '', price: '', image: null, description: '', size: '' });
          } catch (error) {
             console.log(error);
             toast.error("Có lỗi xảy ra", { position: "top-center" });
@@ -79,6 +78,7 @@ const AddProduct = () => {
       contract.once("SoldBySeller", (uid) => {
          setIsLoading(false);
          toast.success("Success", { position: "top-center" });
+         setPayload({ name: '', price: '', image: null, description: '', size: '' });
       })
    }
 

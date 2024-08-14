@@ -7,7 +7,6 @@ import { ethers } from 'ethers';
 import ThemedSuspense from '../../components/dashboard/ThemedSuspense'
 import { SidebarContext } from '../../context/dashboard/SideBarContext';
 import LCKContract from '../../contracts/LCK.contract.ts'
-import ProductContract from '../../contracts/Product.contract.ts';
 
 const Layout = () => {
 

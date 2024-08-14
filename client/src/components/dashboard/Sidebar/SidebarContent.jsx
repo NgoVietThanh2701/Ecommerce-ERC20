@@ -23,17 +23,25 @@ function SidebarContent({ address, web3Provider }) {
    const [isShipper, setIsShipper] = useState(false);
 
    const checkSeller = async () => {
-      let result = false;
-      const productContract = new ProductContract(web3Provider);
-      result = await productContract.isSeller(address);
-      setIsSeller(result);
+      try {
+         let result = false;
+         const productContract = new ProductContract(web3Provider);
+         result = await productContract.isSeller(address);
+         setIsSeller(result);
+      } catch (error) {
+
+      }
    }
 
    const checkShipper = async () => {
-      let result = false;
-      const productContract = new ProductContract(web3Provider);
-      result = await productContract.isShipper(address);
-      setIsShipper(result);
+      try {
+         let result = false;
+         const productContract = new ProductContract(web3Provider);
+         result = await productContract.isShipper(address);
+         setIsShipper(result);
+      } catch (error) {
+
+      }
    }
 
    useEffect(() => {
@@ -83,53 +91,81 @@ function SidebarContent({ address, web3Provider }) {
                <hr className="customeDivider mx-4 my-5" />
             </>}
 
-            {isSeller && <>
-               {routesSeller.map((route) =>
-                  route.routes ? (
-                     <SidebarSubmenu route={route} key={route.name} />
-                  ) : (
-                     <li className="relative px-6 py-3.5" key={route.name}>
-                        <NavLink
-                           exact={route.exact}
-                           to={route.path}
-                           className={({ isActive }) => (isActive ? styleActiveSidBar : styleSideBar)}
-                        >
-                           <Icon
-                              className="w-5 h-5"
-                              aria-hidden="true"
-                              icon={route.icon}
-                           />
-                           <span className="ml-4">{route.name}</span>
-                        </NavLink>
-                     </li>
-                  )
-               )}
-               <hr className="customeDivider mx-4 my-5" />
-            </>}
-
-            {isShipper && <>
-               {routesShipper.map((route) =>
-                  route.routes ? (
-                     <SidebarSubmenu route={route} key={route.name} />
-                  ) : (
-                     <li className="relative px-6 py-1" key={route.name}>
-                        <NavLink
-                           exact={route.exact}
-                           to={route.path}
-                           className={({ isActive }) => (isActive ? styleActiveSidBar : styleSideBar)}
-                        >
-                           <Icon
-                              className="w-5 h-5"
-                              aria-hidden="true"
-                              icon={route.icon}
-                           />
-                           <span className="ml-4">{route.name}</span>
-                        </NavLink>
-                     </li>
-                  )
-               )}
-               <hr className="customeDivider mx-4 my-5" />
-            </>}
+            {(isSeller && isShipper) ?
+               // show menu for seller and shipper
+               <>
+                  {[...routesSeller, ...routesShipper.slice(0, -1)].map((route) =>
+                     route.routes ? (
+                        <SidebarSubmenu route={route} key={route.name} />
+                     ) : (
+                        <li className="relative px-6 py-3.5" key={route.name}>
+                           <NavLink
+                              exact={route.exact}
+                              to={route.path}
+                              className={({ isActive }) => (isActive ? styleActiveSidBar : styleSideBar)}
+                           >
+                              <Icon
+                                 className="w-5 h-5"
+                                 aria-hidden="true"
+                                 icon={route.icon}
+                              />
+                              <span className="ml-4">{route.name}</span>
+                           </NavLink>
+                        </li>
+                     )
+                  )}
+                  <hr className="customeDivider mx-4 my-5" />
+               </> :
+               // 1 in 2
+               <>
+                  {isSeller && <>
+                     {routesSeller.map((route) =>
+                        route.routes ? (
+                           <SidebarSubmenu route={route} key={route.name} />
+                        ) : (
+                           <li className="relative px-6 py-3.5" key={route.name}>
+                              <NavLink
+                                 exact={route.exact}
+                                 to={route.path}
+                                 className={({ isActive }) => (isActive ? styleActiveSidBar : styleSideBar)}
+                              >
+                                 <Icon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                    icon={route.icon}
+                                 />
+                                 <span className="ml-4">{route.name}</span>
+                              </NavLink>
+                           </li>
+                        )
+                     )}
+                     <hr className="customeDivider mx-4 my-5" />
+                  </>}
+                  {isShipper && <>
+                     {routesShipper.map((route) =>
+                        route.routes ? (
+                           <SidebarSubmenu route={route} key={route.name} />
+                        ) : (
+                           <li className="relative px-6 py-1" key={route.name}>
+                              <NavLink
+                                 exact={route.exact}
+                                 to={route.path}
+                                 className={({ isActive }) => (isActive ? styleActiveSidBar : styleSideBar)}
+                              >
+                                 <Icon
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                    icon={route.icon}
+                                 />
+                                 <span className="ml-4">{route.name}</span>
+                              </NavLink>
+                           </li>
+                        )
+                     )}
+                     <hr className="customeDivider mx-4 my-5" />
+                  </>}
+               </>
+            }
          </ul>
 
          <div className="px-6 my-6">
